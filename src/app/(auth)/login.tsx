@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ export default function LoginScreen() {
   const [error, setError] = useState('');
   
   const { signIn } = useAuth();
+  const { isDarkMode, accentColor } = useTheme();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -32,10 +34,10 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? '#1F2937' : '#ffffff' }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.subtitle}>Sign in to your account</Text>
+        <Text style={[styles.title, { color: isDarkMode ? '#F3F4F6' : '#1F2937' }]}>Welcome Back</Text>
+        <Text style={[styles.subtitle, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>Sign in to your account</Text>
       </View>
 
       <View style={styles.form}>
@@ -68,14 +70,14 @@ export default function LoginScreen() {
           style={styles.forgotPassword}
           onPress={() => router.push('/forgot-password')}
         >
-          <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+          <Text style={[styles.forgotPasswordText, { color: accentColor }]}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Don't have an account? </Text>
+        <Text style={[styles.footerText, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>Don't have an account? </Text>
         <TouchableOpacity onPress={() => router.push('/signup')}>
-          <Text style={styles.footerLink}>Sign up</Text>
+          <Text style={[styles.footerLink, { color: accentColor }]}>Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -86,7 +88,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#ffffff',
   },
   header: {
     marginTop: 40,
@@ -95,12 +96,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#1F2937',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6B7280',
   },
   form: {
     gap: 16,
@@ -115,7 +114,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   forgotPasswordText: {
-    color: '#3B82F6',
     fontSize: 14,
   },
   footer: {
@@ -125,11 +123,9 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   footerText: {
-    color: '#6B7280',
     fontSize: 14,
   },
   footerLink: {
-    color: '#3B82F6',
     fontSize: 14,
     fontWeight: '500',
   },

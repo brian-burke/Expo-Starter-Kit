@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ export default function ForgotPasswordScreen() {
   const [success, setSuccess] = useState(false);
   
   const { resetPassword } = useAuth();
+  const { isDarkMode, accentColor } = useTheme();
 
   const handleResetPassword = async () => {
     if (!email) {
@@ -33,10 +35,10 @@ export default function ForgotPasswordScreen() {
 
   if (success) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: isDarkMode ? '#1F2937' : '#ffffff' }]}>
         <View style={styles.header}>
-          <Text style={styles.title}>Check Your Email</Text>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.title, { color: isDarkMode ? '#F3F4F6' : '#1F2937' }]}>Check Your Email</Text>
+          <Text style={[styles.subtitle, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>
             We've sent password reset instructions to your email address.
           </Text>
         </View>
@@ -51,10 +53,10 @@ export default function ForgotPasswordScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? '#1F2937' : '#ffffff' }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Reset Password</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.title, { color: isDarkMode ? '#F3F4F6' : '#1F2937' }]}>Reset Password</Text>
+        <Text style={[styles.subtitle, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>
           Enter your email address and we'll send you instructions to reset your password.
         </Text>
       </View>
@@ -81,7 +83,7 @@ export default function ForgotPasswordScreen() {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Text style={styles.backButtonText}>Back to Login</Text>
+          <Text style={[styles.backButtonText, { color: accentColor }]}>Back to Login</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -92,7 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#ffffff',
   },
   header: {
     marginTop: 40,
@@ -101,12 +102,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#1F2937',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6B7280',
     lineHeight: 24,
   },
   form: {
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   backButtonText: {
-    color: '#3B82F6',
     fontSize: 14,
     fontWeight: '500',
   },

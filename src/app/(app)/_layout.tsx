@@ -6,6 +6,7 @@ export default function AppLayout() {
     <ProtectedRoute>
       <Stack
         screenOptions={{
+          headerShown: false,
           headerShadowVisible: false,
           headerTitleStyle: {
             color: '#1F2937',

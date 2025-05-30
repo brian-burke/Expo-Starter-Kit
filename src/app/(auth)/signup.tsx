@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function SignupScreen() {
   const [fullName, setFullName] = useState('');
@@ -13,6 +14,7 @@ export default function SignupScreen() {
   const [error, setError] = useState('');
   
   const { signUp } = useAuth();
+  const { isDarkMode, accentColor } = useTheme();
 
   const handleSignup = async () => {
     if (!email || !password || !fullName) {
@@ -38,10 +40,10 @@ export default function SignupScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? '#1F2937' : '#ffffff' }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Create Account</Text>
-        <Text style={styles.subtitle}>Sign up to get started</Text>
+        <Text style={[styles.title, { color: isDarkMode ? '#F3F4F6' : '#1F2937' }]}>Create Account</Text>
+        <Text style={[styles.subtitle, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>Sign up to get started</Text>
       </View>
 
       <View style={styles.form}>
@@ -80,9 +82,9 @@ export default function SignupScreen() {
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Already have an account? </Text>
+        <Text style={[styles.footerText, { color: isDarkMode ? '#9CA3AF' : '#6B7280' }]}>Already have an account? </Text>
         <TouchableOpacity onPress={() => router.push('/login')}>
-          <Text style={styles.footerLink}>Sign in</Text>
+          <Text style={[styles.footerLink, { color: accentColor }]}>Sign in</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -93,7 +95,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#ffffff',
   },
   header: {
     marginTop: 40,
@@ -102,12 +103,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#1F2937',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6B7280',
   },
   form: {
     gap: 16,
@@ -124,11 +123,9 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   footerText: {
-    color: '#6B7280',
     fontSize: 14,
   },
   footerLink: {
-    color: '#3B82F6',
     fontSize: 14,
     fontWeight: '500',
   },
