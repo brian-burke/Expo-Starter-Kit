@@ -40,7 +40,6 @@ export default function Page() {
     </ThemeProvider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

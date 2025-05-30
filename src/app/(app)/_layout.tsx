@@ -6,15 +6,6 @@ export default function AppLayout() {
     <ProtectedRoute>
       <Stack
         screenOptions={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          animationDuration: 300,
-          gestureEnabled: true,
-          gestureDirection: 'horizontal',
-          presentation: 'card',
-          headerStyle: {
-            backgroundColor: '#ffffff',
-          },
           headerShadowVisible: false,
           headerTitleStyle: {
             color: '#1F2937',

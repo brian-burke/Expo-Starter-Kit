@@ -34,11 +34,7 @@ export function ProfileScreen(): React.ReactElement {
       const response = await supabase.auth.signOut();
       if (response.error) {
         Alert.alert('Sign Out Error', response.error.message);
-      } else {
-        Alert.alert('Signed Out', 'You have been successfully signed out.');
-        // Optionally, navigate to a login screen or splash screen after sign out
-        // navigation.navigate('Login'); // You'd need to pass navigation prop
-      }
+      } 
     } catch (error: any) {
       Alert.alert('Error', 'An unexpected error occurred during sign out: ' + error.message);
     }

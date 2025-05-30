@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
-import { router } from 'expo-router';
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
@@ -12,7 +11,7 @@ export default function ProfileScreen() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      router.replace('/login');
+      // Navigation will be handled by the root layout
     } catch (error) {
       console.error('Error signing out:', error);
     }

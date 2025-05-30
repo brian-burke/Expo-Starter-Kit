@@ -11,7 +11,6 @@ export default function NonTabsLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
         headerStyle: {
           backgroundColor: isDarkMode ? '#1F2937' : 'white',
         },
