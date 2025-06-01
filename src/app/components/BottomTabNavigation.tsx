@@ -6,9 +6,13 @@ import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { useTheme } from '../contexts/ThemeContext';
 
+import { FolderIcon } from 'lucide-react-native';
+import PhotosScreen from '../(app)/photos';
+
 type BottomTabParamList = {
   Home: undefined;
   Profile: undefined;
+  Photos: undefined;
   Settings: { 
     bottomMenuEnabled?: boolean; 
     onBottomMenuToggle?: (value: boolean) => void;
@@ -33,6 +37,8 @@ export function BottomTabNavigation({
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
+            case 'Photos':
+              return <FolderIcon color={color} size={size} />;
             case 'Home':
               return <HomeIcon color={color} size={size} />;
             case 'Profile':
@@ -76,6 +82,14 @@ export function BottomTabNavigation({
         component={ProfileScreen} 
         options={{ 
           title: 'Profile',
+          headerShown: false 
+        }} 
+      />
+            <Tab.Screen 
+        name="Photos" 
+        component={PhotosScreen} 
+        options={{ 
+          title: 'Photos',
           headerShown: false 
         }} 
       />
