@@ -51,6 +51,7 @@ export default function FolderScreen() {
         .order('created_at', { ascending: false });
 
       if (photosError) throw photosError;
+      console.log('photosData', photosData);
       setPhotos(photosData || []);
     } catch (error) {
       Alert.alert('Error', 'Failed to fetch folder data');
@@ -115,8 +116,7 @@ export default function FolderScreen() {
           .insert([
             {
               folder_id: id,
-              url: publicUrl,
-              user_id: user.id
+              storage_path: publicUrl,
             },
           ])
           .select()
@@ -144,7 +144,7 @@ export default function FolderScreen() {
         // Handle photo view/preview
       }}
     >
-      <Image source={{ uri: item.url }} style={styles.photoImage} />
+      <Image source={{ uri: item.storage_path }} style={styles.photoImage} />
     </TouchableOpacity>
   );
 
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 24,
+    marginTop: 50,
   },
   backButton: {
     padding: 8,

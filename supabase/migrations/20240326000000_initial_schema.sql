@@ -78,11 +78,11 @@ create table public.journals (
 );
 
 -- Enable Row-Level Security
-alter table user_profiles enable row level security;
-alter table user_links enable row level security;
-alter table folders enable row level security;
-alter table folder_users enable row level security;
-alter table photos enable row level security;
-alter table photo_links enable row level security;
-alter table reminders enable row level security;
-alter table journals enable row level security; 
+-- alter table user_profiles enable row level security;
+-- alter table user_links enable row level security;
+-- alter table folders enable row level security;
+-- alter table folder_users enable row level security;
+-- alter table photos enable row level security;
+-- alter table photo_links enable row level security;
+-- alter table reminders enable row level security;
+-- alter table journals enable row level security; 

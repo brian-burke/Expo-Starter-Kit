@@ -57,7 +57,7 @@ export default function PhotosScreen() {
         .from('folders')
         .insert([{ 
           name: newFolderName.trim(),
-          user_id: user.id
+          created_by: user.id
         }])
         .select()
         .single();
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 24,
-    marginTop: 100,
+    marginTop: 50,
   },
   title: {
     fontSize: 24,
