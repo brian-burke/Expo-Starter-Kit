@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeIcon, UserIcon, SettingsIcon } from 'lucide-react-native';
+import { HomeIcon, UserIcon, SettingsIcon, UsersIcon} from 'lucide-react-native';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
@@ -8,11 +8,13 @@ import { useTheme } from '../contexts/ThemeContext';
 
 import { FolderIcon } from 'lucide-react-native';
 import PhotosScreen from '../(app)/photos';
+import FriendsScreen from '../(app)/friends';
 
 type BottomTabParamList = {
   Home: undefined;
   Profile: undefined;
   Photos: undefined;
+  Friends: undefined;
   Settings: { 
     bottomMenuEnabled?: boolean; 
     onBottomMenuToggle?: (value: boolean) => void;
@@ -45,6 +47,8 @@ export function BottomTabNavigation({
               return <UserIcon color={color} size={size} />;
             case 'Settings':
               return <SettingsIcon color={color} size={size} />;
+            case 'Friends':
+              return <UsersIcon color={color} size={size} />;
             default:
               return null;
           }
@@ -93,6 +97,14 @@ export function BottomTabNavigation({
           headerShown: false 
         }} 
       />
+                  <Tab.Screen 
+        name="Friends" 
+        component={FriendsScreen} 
+        options={{ 
+          title: 'Friends',
+          headerShown: false,
+        }} 
+      />
       <Tab.Screen 
         name="Settings" 
         component={SettingsScreen} 
@@ -105,6 +117,7 @@ export function BottomTabNavigation({
           headerShown: false,
         }} 
       />
+
     </Tab.Navigator>
   );
 }
