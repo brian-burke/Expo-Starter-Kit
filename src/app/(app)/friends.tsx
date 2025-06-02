@@ -56,7 +56,11 @@ export default function FriendsScreen() {
         .from('user_links')
         .select(`
           *,
-          linked_user:linked_user_id(
+          user_info:user_id(
+            id,
+            full_name
+          ),
+          linked_user_info:linked_user_id(
             id,
             full_name
           )
@@ -66,8 +70,14 @@ export default function FriendsScreen() {
 
       if (acceptedError) throw acceptedError;
 
+      // Transform accepted friends to always show the other user's info
+      const transformedFriends = acceptedFriends?.map(friend => ({
+        ...friend,
+        linked_user: friend.user_id === user?.id ? friend.linked_user_info : friend.user_info
+      })) || [];
+
       setFriendRequests(receivedRequests || []);
-      setFriends(acceptedFriends || []);
+      setFriends(transformedFriends);
 
     } catch (error) {
       console.error('Error fetching friends:', error);
@@ -172,6 +182,7 @@ export default function FriendsScreen() {
     );
   }
 
+  console.log('friends', friends);
   return (
     <View style={[styles.container, { backgroundColor: isDarkMode ? '#1F2937' : '#ffffff' }]}>
       <View style={styles.searchContainer}>
@@ -232,7 +243,7 @@ export default function FriendsScreen() {
                 <View style={styles.userInfo}>
                   <UserCircle size={24} color={accentColor} />
                   <Text style={[styles.userName, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
-                    {item.linked_user?.user_metadata?.full_name || item.linked_user?.email}
+                    {item.linked_user?.full_name}
                   </Text>
                 </View>
                 <View style={styles.requestActions}>
@@ -262,34 +273,31 @@ export default function FriendsScreen() {
         <FlatList
           data={friends}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            const friendUser = item.user_id === user?.id ? item.linked_user : item.linked_user;
-            return (
-              <View style={[styles.friendItem, { backgroundColor: isDarkMode ? '#374151' : '#F3F4F6' }]}>
-                <View style={styles.userInfo}>
-                  <UserCircle size={24} color={accentColor} />
-                  <Text style={[styles.userName, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
-                    {friendUser?.full_name || friendUser?.email}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={[styles.removeButton]}
-                  onPress={() => {
-                    Alert.alert(
-                      'Remove Friend',
-                      'Are you sure you want to remove this friend?',
-                      [
-                        { text: 'Cancel', style: 'cancel' },
-                        { text: 'Remove', style: 'destructive', onPress: () => removeFriend(friendUser?.id) }
-                      ]
-                    );
-                  }}
-                >
-                  <X size={20} color={isDarkMode ? '#ffffff' : '#000000'} />
-                </TouchableOpacity>
+          renderItem={({ item }) => (
+            <View style={[styles.friendItem, { backgroundColor: isDarkMode ? '#374151' : '#F3F4F6' }]}>
+              <View style={styles.userInfo}>
+                <UserCircle size={24} color={accentColor} />
+                <Text style={[styles.userName, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
+                  {item.linked_user?.full_name}
+                </Text>
               </View>
-            );
-          }}
+              <TouchableOpacity
+                style={[styles.removeButton]}
+                onPress={() => {
+                  Alert.alert(
+                    'Remove Friend',
+                    'Are you sure you want to remove this friend?',
+                    [
+                      { text: 'Cancel', style: 'cancel' },
+                      { text: 'Remove', style: 'destructive', onPress: () => removeFriend(item.linked_user?.id) }
+                    ]
+                  );
+                }}
+              >
+                <X size={20} color={isDarkMode ? '#ffffff' : '#000000'} />
+              </TouchableOpacity>
+            </View>
+          )}
         />
       </View>
     </View>
