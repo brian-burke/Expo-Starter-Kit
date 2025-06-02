@@ -12,6 +12,7 @@ interface Photo {
   url: string;
   created_at: string;
   folder_id: string;
+  storage_path: string;
 }
 
 interface Folder {

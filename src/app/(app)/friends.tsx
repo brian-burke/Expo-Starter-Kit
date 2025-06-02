@@ -15,9 +15,7 @@ type UserLink = {
   linked_user?: {
     id: string;
     email: string;
-    user_metadata?: {
-      full_name?: string;
-    };
+    full_name: string;
   };
 };
 
