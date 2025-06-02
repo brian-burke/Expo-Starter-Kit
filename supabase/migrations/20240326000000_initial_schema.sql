@@ -10,8 +10,8 @@ create table public.user_profiles (
 -- Table: user_links (relationships between users)
 create table public.user_links (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid references auth.users(id),
-  linked_user_id uuid references auth.users(id),
+  user_id uuid references public.user_profiles(id),
+  linked_user_id uuid references public.user_profiles(id),
   status text check (status in ('pending', 'accepted', 'rejected')) default 'pending',
   type text, -- e.g. "full", "folder-only"
   created_at timestamp with time zone default now(),

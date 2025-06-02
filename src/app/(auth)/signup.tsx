@@ -31,6 +31,7 @@ export default function SignupScreen() {
       setError('');
       setLoading(true);
       await signUp(email, password, fullName);
+      
       router.replace('/(app)');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');

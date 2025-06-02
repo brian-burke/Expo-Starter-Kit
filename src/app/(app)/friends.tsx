@@ -35,17 +35,17 @@ export default function FriendsScreen() {
     fetchFriends();
   }, []);
 
+  
   const fetchFriends = async () => {
     try {
-      // Fetch received friend requests
+    //   Fetch received friend requests
       const { data: receivedRequests, error: receivedError } = await supabase
         .from('user_links')
         .select(`
           *,
           linked_user:user_id(
             id,
-            email,
-            user_metadata
+            full_name
           )
         `)
         .eq('linked_user_id', user?.id)
@@ -60,8 +60,7 @@ export default function FriendsScreen() {
           *,
           linked_user:linked_user_id(
             id,
-            email,
-            user_metadata
+            full_name
           )
         `)
         .or(`user_id.eq.${user?.id},linked_user_id.eq.${user?.id}`)
@@ -71,6 +70,7 @@ export default function FriendsScreen() {
 
       setFriendRequests(receivedRequests || []);
       setFriends(acceptedFriends || []);
+
     } catch (error) {
       console.error('Error fetching friends:', error);
       Alert.alert('Error', 'Failed to fetch friends');
@@ -94,6 +94,7 @@ export default function FriendsScreen() {
         .neq('id', user?.id)
         .limit(5);
 
+        console.log('data', data);
       if (error) throw error;
       setSearchResults(data || []);
     } catch (error) {
@@ -270,7 +271,7 @@ export default function FriendsScreen() {
                 <View style={styles.userInfo}>
                   <UserCircle size={24} color={accentColor} />
                   <Text style={[styles.userName, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
-                    {friendUser?.user_metadata?.full_name || friendUser?.email}
+                    {friendUser?.full_name || friendUser?.email}
                   </Text>
                 </View>
                 <TouchableOpacity
